@@ -95,20 +95,21 @@ a,button{font:inherit}
 @media(max-width:900px){.workflow-grid::before{display:none}}
 .workflow-step{
   position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:4%;padding:22% 5% 14%;border:2px solid rgba(230,174,27,.5);border-radius:14px;
+  gap:3%;padding:13% 4% 8%;border:2px solid rgba(230,174,27,.5);border-radius:12px;
   background:linear-gradient(145deg,#ffd84f 0%,#ffd457 55%,#ffe27a 100%);
   box-shadow:0 5px 10px rgba(18,45,84,.18);color:#073178;text-align:center;
   transition:transform .2s var(--ease),box-shadow .2s var(--ease);
+  max-width:85%;margin:0 auto;
 }
 .workflow-step:hover{transform:translateY(-3px);box-shadow:0 9px 18px rgba(18,45,84,.26)}
 .workflow-number{
-  position:absolute;left:50%;top:-16px;transform:translateX(-50%);display:grid;place-items:center;
-  width:34px;height:34px;border:3px solid #fff;border-radius:50%;background:#0b4a9c;color:#fff;
-  font-size:15px;font-weight:900;line-height:1;box-shadow:0 2px 5px rgba(18,45,84,.2);
+  position:absolute;left:50%;top:-13px;transform:translateX(-50%);display:grid;place-items:center;
+  width:28px;height:28px;border:2px solid #fff;border-radius:50%;background:#0b4a9c;color:#fff;
+  font-size:13px;font-weight:900;line-height:1;box-shadow:0 2px 5px rgba(18,45,84,.2);
 }
-.workflow-icon{width:34%;aspect-ratio:1;color:#073178;margin-top:6px}
+.workflow-icon{width:26%;aspect-ratio:1;color:#073178;margin-top:6px}
 .workflow-icon svg{display:block;width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
-.workflow-label{font-size:12.5px;line-height:1.2;font-weight:900;text-transform:uppercase}
+.workflow-label{font-size:11px;line-height:1.2;font-weight:900;text-transform:uppercase}
 
 /* ===== Hotspot ===== */
 .hotspot-row{display:flex;flex-wrap:wrap;gap:22px;margin-top:20px}
@@ -196,6 +197,10 @@ table.charge-table td.strong{font-weight:800;color:var(--navy)}
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
       Download / Save as PDF
     </button>
+    <a class="btn-primary" href="https://playforwarding.clickandcargo.com/ClickAndCargo/app/login.xhtml" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/></svg>
+      Open ERP
+    </a>
   </div>
   <span class="hint">Commercial Offer · Maritime Export · Port Virtual Lab</span>
 </nav>
