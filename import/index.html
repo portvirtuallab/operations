@@ -95,22 +95,30 @@ a,button{font:inherit}
 @media(max-width:900px){.workflow-grid::before{display:none}}
 .workflow-grid.cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}
 @media(max-width:900px){.workflow-grid.cols-4{grid-template-columns:1fr 1fr}}
+.workflow-grid.cols-5{grid-template-columns:repeat(5,minmax(0,1fr))}
+@media(max-width:900px){.workflow-grid.cols-5{grid-template-columns:1fr 1fr}}
 .workflow-step{
   position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:4%;padding:22% 5% 14%;border:2px solid rgba(230,174,27,.5);border-radius:14px;
+  gap:2%;padding:9% 3% 5%;border:2px solid rgba(230,174,27,.5);border-radius:10px;
   background:linear-gradient(145deg,#ffd84f 0%,#ffd457 55%,#ffe27a 100%);
   box-shadow:0 5px 10px rgba(18,45,84,.18);color:#073178;text-align:center;
   transition:transform .2s var(--ease),box-shadow .2s var(--ease);
+  max-width:70%;margin:0 auto;
 }
 .workflow-step:hover{transform:translateY(-3px);box-shadow:0 9px 18px rgba(18,45,84,.26)}
 .workflow-number{
-  position:absolute;left:50%;top:-16px;transform:translateX(-50%);display:grid;place-items:center;
-  width:34px;height:34px;border:3px solid #fff;border-radius:50%;background:#0b4a9c;color:#fff;
-  font-size:15px;font-weight:900;line-height:1;box-shadow:0 2px 5px rgba(18,45,84,.2);
+  position:absolute;left:50%;top:-9px;transform:translateX(-50%);display:grid;place-items:center;
+  width:19px;height:19px;border:2px solid #fff;border-radius:50%;background:#0b4a9c;color:#fff;
+  font-size:10px;font-weight:900;line-height:1;box-shadow:0 2px 5px rgba(18,45,84,.2);
 }
-.workflow-icon{width:30%;aspect-ratio:1;color:#073178;margin-top:6px}
+.workflow-icon{width:17%;aspect-ratio:1;color:#073178;margin-top:6px}
 .workflow-icon svg{display:block;width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
-.workflow-label{font-size:12.5px;line-height:1.2;font-weight:900;text-transform:uppercase}
+.workflow-label{font-size:8.5px;line-height:1.2;font-weight:900;text-transform:uppercase}
+
+.workflow-grid[aria-label="Step 01"] .workflow-step{padding:13% 4% 8%;max-width:88%}
+.workflow-grid[aria-label="Step 01"] .workflow-icon{width:24%}
+.workflow-grid[aria-label="Step 01"] .workflow-label{font-size:11px}
+.workflow-grid[aria-label="Step 01"] .workflow-number{width:26px;height:26px;font-size:12.5px;top:-13px}
 
 /* ===== Hotspot ===== */
 .hotspot-row{display:flex;flex-wrap:wrap;gap:22px;margin-top:20px}
@@ -132,7 +140,7 @@ a,button{font:inherit}
 .erp-breadcrumb span.crumb{background:var(--navy-soft);padding:6px 12px;border-radius:999px}
 .erp-breadcrumb svg{width:14px;height:14px;color:#8a94a6}
 
-.icon-strip{display:inline-flex;gap:8px;background:var(--navy);border-radius:8px;padding:8px 10px;margin-left:6px}
+.icon-strip{display:inline-flex;gap:8px;background:var(--blue);border-radius:8px;padding:8px 10px;margin-left:6px}
 .icon-strip span{width:26px;height:26px;color:#fff;display:grid;place-items:center}
 .icon-strip svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
@@ -144,8 +152,8 @@ a,button{font:inherit}
 .flow-note{flex:2;min-width:280px;background:#fff;border:1px solid rgba(7,45,115,.15);border-radius:var(--radius-md);padding:16px 20px;font-size:13px;color:#2a3a5c;line-height:1.55;font-weight:600}
 
 .doc-icon-center{display:flex;justify-content:center;margin:6px 0 8px}
-.doc-icon-center .icon{width:44px;height:44px;color:var(--navy)}
-.doc-icon-center .icon svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.doc-icon-center .icon{width:44px;height:44px;color:var(--blue)}
+.doc-icon-center .icon svg{width:100%;height:100%}
 
 .closure-box{margin-top:30px;border-radius:var(--radius-md);padding:22px 26px;background:linear-gradient(120deg,var(--green-soft),transparent);border:2px solid rgba(28,138,75,.35);display:flex;gap:16px;align-items:flex-start}
 .closure-box .icon{width:38px;height:38px;color:var(--green);flex:none}
@@ -254,19 +262,15 @@ a,button{font:inherit}
         </span>
         <span class="workflow-label">Request Arrival Charges</span>
       </div>
-      <div class="workflow-step">
+      <a class="workflow-step" href="https://sdglines.com/arrival-charges" target="_blank" rel="noopener" style="text-decoration:none">
         <span class="workflow-number">3</span>
         <span class="workflow-icon" aria-hidden="true">
           <svg viewBox="0 0 64 64"><path d="M16 8h24l10 10v38H16z"/><path d="M40 8v12h10"/><path d="M23 31h20M23 39h20M23 47h14"/></svg>
         </span>
         <span class="workflow-label">DAP Quotation</span>
-      </div>
+      </a>
     </div>
     <div class="hotspot-row">
-      <a class="hotspot" href="https://sdglines.com/arrival-charges" target="_blank" rel="noopener">
-        <span class="hotspot-dot" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/></svg></span>
-        <span class="link-label">Request Arrival Charges — SDG Lines</span>
-      </a>
       <a class="hotspot" href="https://drive.google.com/file/d/1vKVZcpCtK0Z8ED338AnagKkHjLv1xA9Y/view" target="_blank" rel="noopener">
         <span class="hotspot-dot" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
         <span class="link-label">DAP Quotation — video tutorial</span>
@@ -355,10 +359,6 @@ a,button{font:inherit}
       </span>
     </div>
     <div class="hotspot-row">
-      <a class="hotspot" href="https://playforwarding.clickandcargo.com/ClickAndCargo/app/login.xhtml" target="_blank" rel="noopener">
-        <span class="hotspot-dot" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/></svg></span>
-        <span class="link-label">Open Click and Cargo</span>
-      </a>
       <a class="hotspot" href="https://drive.google.com/file/d/1VMSxy67ODfp_hFQYZZHR2fOUC78zlZRH/view" target="_blank" rel="noopener">
         <span class="hotspot-dot" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/><path d="M5 21h14"/></svg></span>
         <span class="link-label">Create from existing offer — video tutorial</span>
@@ -368,30 +368,37 @@ a,button{font:inherit}
 
   <div class="section-block">
     <div class="section-head"><span class="dot"></span><h2>2 · (ERP) Generate Documentation</h2></div>
-    <div class="workflow-grid cols-4" role="list" aria-label="Documents generated by the ERP">
-      <div class="workflow-step">
+    <div class="workflow-grid cols-5" role="list" aria-label="Documents generated by the ERP">
+      <a class="workflow-step" href="https://playforwarding.clickandcargo.com/ClickAndCargo/app/login.xhtml" target="_blank" rel="noopener" style="text-decoration:none">
         <span class="workflow-number">1</span>
+        <span class="workflow-icon" aria-hidden="true">
+          <svg viewBox="0 0 64 64"><path d="M40 8h16v16"/><path d="M28 36 56 8"/><path d="M56 36v14a6 6 0 0 1-6 6H14a6 6 0 0 1-6-6V14a6 6 0 0 1 6-6h14"/></svg>
+        </span>
+        <span class="workflow-label">Open Click<br>and Cargo</span>
+      </a>
+      <div class="workflow-step">
+        <span class="workflow-number">2</span>
         <span class="workflow-icon" aria-hidden="true">
           <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="22"/><path d="M32 18v14l10 6"/></svg>
         </span>
         <span class="workflow-label">Prearrival<br>Notice</span>
       </div>
       <div class="workflow-step">
-        <span class="workflow-number">2</span>
+        <span class="workflow-number">3</span>
         <span class="workflow-icon" aria-hidden="true">
           <svg viewBox="0 0 64 64"><path d="M18 43h28"/><path d="M23 43V29c0-7 4-12 9-12s9 5 9 12v14"/><path d="M16 43c0 4 3 7 7 7h18c4 0 7-3 7-7"/><path d="M28 53c1 3 3 4 4 4s3-1 4-4"/><path d="M32 10v7"/></svg>
         </span>
         <span class="workflow-label">Arrival<br>Notice</span>
       </div>
       <div class="workflow-step">
-        <span class="workflow-number">3</span>
+        <span class="workflow-number">4</span>
         <span class="workflow-icon" aria-hidden="true">
           <svg viewBox="0 0 64 64"><path d="M32 8 15 17l17 9 17-9-17-9Z"/><path d="M24 27v8c0 5 3 8 8 8s8-3 8-8v-8"/><path d="M16 56c2-9 8-13 16-13s14 4 16 13"/><path d="M13 17v12"/></svg>
         </span>
         <span class="workflow-label">Customs<br>Clearance</span>
       </div>
       <div class="workflow-step">
-        <span class="workflow-number">4</span>
+        <span class="workflow-number">5</span>
         <span class="workflow-icon" aria-hidden="true">
           <svg viewBox="0 0 64 64"><path d="M7 22h31v25H7z"/><path d="M38 31h12l8 9v7H38z"/><path d="M43 35v7h10"/><circle cx="18" cy="50" r="6"/><circle cx="48" cy="50" r="6"/></svg>
         </span>
@@ -399,7 +406,7 @@ a,button{font:inherit}
       </div>
     </div>
     <div class="doc-icon-center" aria-hidden="true">
-      <span class="icon"><svg viewBox="0 0 24 24"><path d="M6 3h9l5 5v13H6z"/><path d="M15 3v5h5"/><path d="M8.5 12h7M8.5 15h7M8.5 18h4"/></svg></span>
+      <span class="icon"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M6 2a1 1 0 0 0-1 1v18a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8l-6-6H6Z"/><path fill="#fff" opacity=".85" d="M13 2v5a1 1 0 0 0 1 1h5z"/><rect x="7.5" y="12.5" width="9" height="1.6" rx=".8" fill="#fff"/><rect x="7.5" y="15.5" width="9" height="1.6" rx=".8" fill="#fff"/><rect x="7.5" y="18.5" width="5" height="1.6" rx=".8" fill="#fff"/></svg></span>
     </div>
   </div>
 
