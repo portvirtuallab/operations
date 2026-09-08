@@ -3,53 +3,2062 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PVL.ONE | Test Page</title>
+  <meta name="description" content="PVL.ONE Case Study Library">
+  <title>PVL.ONE | Case Study Library</title>
+
 
   <style>
+    :root {
+      --navy: #0b2d63;
+      --navy-soft: #164194;
+      --blue: #164194;
+      --cyan: #009fe3;
+      --orange: #f9b233;
+      --coral: #e84e1b;
+      --white: #ffffff;
+      --ink: #10233d;
+      --muted: #65758a;
+      --line: #dfe7ef;
+      --panel: #f5f8fb;
+      --green: #37a153;
+      --shadow-sm: 0 8px 22px rgba(11,45,99,.07);
+      --shadow-md: 0 15px 34px rgba(11,45,99,.12);
+      --radius-lg: 20px;
+      --content-width: 1240px;
+    }
+
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
     body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f5f8fb;
-      color: #10233d;
+      font-family: Inter, Arial, sans-serif;
+      background: #fff;
+      color: var(--ink);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    button, input, select { font: inherit; }
+
+
+    .container {
+      width: min(calc(100% - 64px), var(--content-width));
+      margin: 0 auto;
+    }
+
+
+    /* HEADER */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,.96);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+    }
+
+
+    .header-inner {
+      min-height: 82px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+    }
+
+
+    .brand-area {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      min-width: 0;
+    }
+
+
+    .brand-logo.pvl { width: 112px; max-height: 44px; object-fit: contain; }
+    .brand-logo.escola { width: 165px; max-height: 70px; object-fit: contain; }
+
+
+    .brand-divider {
+      width: 1px;
+      height: 34px;
+      background: var(--line);
+    }
+
+
+    .nav-list {
+      list-style: none;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+
+    .nav-link {
+      display: inline-flex;
+      align-items: center;
+      min-height: 42px;
+      padding: 0 13px;
+      border-radius: 10px;
+      font-size: .88rem;
+      font-weight: 700;
+      color: var(--muted);
+      transition: .2s ease;
+    }
+
+
+    .nav-link:hover {
+      color: var(--navy);
+      background: var(--panel);
+    }
+
+
+    .nav-link.active {
+      color: var(--navy);
+      background: rgba(22,65,148,.08);
+      position: relative;
+    }
+
+
+    .nav-link.active::after {
+      content: "";
+      position: absolute;
+      left: 13px;
+      right: 13px;
+      bottom: 5px;
+      height: 2px;
+      border-radius: 10px;
+      background: var(--cyan);
+    }
+
+
+    /* HERO */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 82% 20%, rgba(0,159,227,.12), transparent 24%),
+        linear-gradient(180deg,#fff 0%,#f7fafe 100%);
+      border-bottom: 1px solid var(--line);
+    }
+
+
+    .hero-inner {
+      min-height: 500px;
+      padding: 84px 0;
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 72px;
+      align-items: center;
+    }
+
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 18px;
+      color: var(--blue);
+      font-size: .76rem;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+
+    .eyebrow::before {
+      content: "";
+      width: 26px;
+      height: 3px;
+      border-radius: 999px;
+      background: var(--cyan);
+    }
+
+
+    .hero-title {
+      color: var(--navy);
+      font-size: clamp(2.8rem,5.3vw,5rem);
+      line-height: .98;
+      letter-spacing: -.055em;
+      font-weight: 800;
+    }
+
+
+    .hero-copy {
+      max-width: 680px;
+      margin-top: 26px;
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.8;
+    }
+
+
+    .hero-actions { margin-top: 32px; }
+
+
+    .primary-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 50px;
+      padding: 0 22px;
+      border-radius: 12px;
+      background: var(--navy);
+      color: #fff;
+      font-size: .9rem;
+      font-weight: 800;
+      box-shadow: 0 10px 22px rgba(11,45,99,.18);
+      transition: .2s ease;
+    }
+
+
+    .primary-button:hover {
+      background: var(--navy-soft);
+      transform: translateY(-2px);
+    }
+
+
+    .hero-metrics {
+      display: grid;
+      gap: 14px;
+    }
+
+
+    .metric-card {
+      padding: 22px 24px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255,255,255,.86);
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+    }
+
+
+    .metric-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 4px;
+      background: var(--cyan);
+    }
+
+
+    .metric-value {
+      color: var(--navy);
+      font-size: 1.55rem;
+      font-weight: 800;
+      line-height: 1.1;
+    }
+
+
+    .metric-label {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: .83rem;
+      font-weight: 650;
+    }
+
+
+    /* LIBRARY */
+    .library-section {
+      padding: 94px 0 110px;
+      scroll-margin-top: 82px;
+    }
+
+
+    .library-top {
+      display: grid;
+      grid-template-columns: 1fr minmax(390px,520px);
+      gap: 50px;
+      align-items: end;
+      margin-bottom: 44px;
+    }
+
+
+    .section-title {
+      color: var(--navy);
+      font-size: clamp(2.2rem,4vw,3.6rem);
+      line-height: 1.04;
+      letter-spacing: -.045em;
+      font-weight: 800;
+    }
+
+
+    .section-description {
+      margin-top: 18px;
+      color: var(--muted);
+    }
+
+
+    .controls {
+      display: grid;
+      grid-template-columns: 1fr 190px;
+      gap: 12px;
+    }
+
+
+    .search-wrapper, .select-wrapper { position: relative; }
+
+
+    .search-icon {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #7a8ba0;
+      pointer-events: none;
+    }
+
+
+    .select-icon {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #7a8ba0;
+      pointer-events: none;
+    }
+
+
+    .search-input, .category-select {
+      width: 100%;
+      height: 50px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      color: var(--ink);
+      outline: none;
+      transition: .2s ease;
+    }
+
+
+    .search-input { padding: 0 16px 0 44px; }
+
+
+    .category-select {
+      appearance: none;
+      padding: 0 40px 0 16px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: .9rem;
+    }
+
+
+    .search-input:focus, .category-select:focus {
+      border-color: var(--cyan);
+      box-shadow: 0 0 0 4px rgba(0,159,227,.10);
+    }
+
+
+    .results-toolbar {
+      min-height: 34px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      color: var(--muted);
+      font-size: .88rem;
+    }
+
+
+    .results-count { font-weight: 750; }
+
+
+    .clear-filters {
+      border: 0;
+      background: transparent;
+      color: var(--blue);
+      cursor: pointer;
+      font-weight: 750;
+      visibility: hidden;
+    }
+
+
+    .clear-filters.visible { visibility: visible; }
+
+
+    .category-section + .category-section { margin-top: 58px; }
+
+
+    .category-heading {
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      color: var(--navy);
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+
+
+    .category-heading::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--line);
+    }
+
+
+    .case-grid {
+      display: grid;
+      grid-template-columns: repeat(3,minmax(0,1fr));
+      gap: 22px;
+    }
+
+
+    /* CARDS */
+    .case-card {
+      --accent: var(--blue);
+      min-height: 390px;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--line);
+      border-top: 4px solid var(--accent);
+      border-radius: var(--radius-lg);
+      background: #fff;
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      transition: transform .22s ease, box-shadow .22s ease;
+    }
+
+
+    .case-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-md);
+    }
+
+
+    .case-card[data-category="airfreight"] { --accent: var(--cyan); }
+    .case-card[data-category="maritime"] { --accent: var(--navy); }
+    .case-card[data-category="railway"] { --accent: var(--green); }
+    .case-card[data-category="dangerous-goods"] { --accent: var(--coral); }
+    .case-card[data-category="reefer"] { --accent: #36b9d8; }
+    .case-card[data-category="multimodal"] { --accent: #087cb9; }
+    .case-card[data-category="customs"] { --accent: var(--blue); }
+
+
+    .card-inner {
+      height: 100%;
+      padding: 25px;
+      display: flex;
+      flex-direction: column;
+    }
+
+
+    .card-topline {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+
+    .category-badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 0 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #f7fafc;
+      color: var(--accent);
+      font-size: .68rem;
+      font-weight: 850;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+
+    .case-icon {
+      width: 38px;
+      height: 38px;
+      flex: 0 0 38px;
       display: grid;
       place-items: center;
-      min-height: 100vh;
+      border-radius: 11px;
+      background: #f5f8fb;
+      color: var(--accent);
     }
 
-    .card {
-      background: white;
-      padding: 40px;
-      border-radius: 18px;
+
+    .case-title {
+      color: var(--navy);
+      font-size: 1.28rem;
+      line-height: 1.24;
+      letter-spacing: -.025em;
+      font-weight: 800;
+    }
+
+
+    .case-subtitle {
+      margin-top: 7px;
+      color: var(--accent);
+      font-size: .88rem;
+      line-height: 1.4;
+      font-weight: 750;
+    }
+
+
+    .case-description {
+      margin-top: 15px;
+      color: var(--muted);
+      font-size: .9rem;
+      line-height: 1.65;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+
+    .route-row {
+      margin-top: 19px;
+      padding: 12px 0;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      color: #4f6279;
+      font-size: .8rem;
+      font-weight: 700;
+    }
+
+
+    .route-dot {
+      width: 7px;
+      height: 7px;
+      border: 2px solid var(--accent);
+      border-radius: 50%;
+      flex: 0 0 auto;
+    }
+
+
+    .route-arrow { color: #9ba8b7; }
+
+
+    .metadata {
+      margin-top: 17px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+
+    .meta-chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 29px;
+      padding: 0 9px;
+      border: 1px solid #e7edf3;
+      border-radius: 8px;
+      background: #f8fafc;
+      color: #5b6c80;
+      font-size: .72rem;
+      font-weight: 700;
+    }
+
+
+    .card-footer {
+      margin-top: auto;
+      padding-top: 22px;
+    }
+
+
+    .case-button {
+      width: 100%;
+      min-height: 46px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: 0;
+      border-radius: 11px;
+      background: var(--navy);
+      color: #fff;
+      font-size: .84rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: .2s ease;
+    }
+
+
+    .case-button:hover { background: var(--navy-soft); }
+
+
+    .case-button.disabled {
+      background: #edf1f5;
+      color: #8997a7;
+      cursor: not-allowed;
+    }
+
+
+    /* EMPTY */
+    .empty-state {
+      display: none;
+      padding: 80px 30px;
+      border: 1px dashed #ccd8e5;
+      border-radius: 20px;
+      background: var(--panel);
       text-align: center;
-      box-shadow: 0 15px 40px rgba(11, 45, 99, 0.12);
     }
 
-    h1 {
-      color: #0b2d63;
-      margin-bottom: 10px;
+
+    .empty-state.visible { display: block; }
+
+
+    .empty-title {
+      color: var(--navy);
+      font-size: 1.25rem;
+      font-weight: 800;
     }
 
-    a {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 12px 20px;
-      background: #164194;
-      color: white;
-      text-decoration: none;
-      border-radius: 10px;
+
+    .empty-copy {
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+
+    /* FOOTER */
+    .site-footer {
+      background: var(--navy);
+      color: rgba(255,255,255,.86);
+    }
+
+
+    .footer-inner {
+      min-height: 140px;
+      padding: 38px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+    }
+
+
+    .footer-title {
+      color: #fff;
+      font-weight: 800;
+    }
+
+
+    .footer-copy, .footer-year {
+      margin-top: 5px;
+      color: rgba(255,255,255,.62);
+      font-size: .8rem;
+    }
+
+
+    .footer-year { text-align: right; }
+
+
+    @media (max-width: 980px) {
+      .hero-inner {
+        min-height: auto;
+        padding: 72px 0;
+        grid-template-columns: 1fr;
+        gap: 44px;
+      }
+
+
+      .hero-metrics {
+        grid-template-columns: repeat(3,minmax(0,1fr));
+      }
+
+
+      .library-top {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+
+
+      .case-grid {
+        grid-template-columns: repeat(2,minmax(0,1fr));
+      }
+    }
+
+
+    @media (max-width: 760px) {
+      .site-header { position: static; }
+
+
+      .header-inner {
+        padding: 17px 0;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+      }
+
+
+      .nav-list {
+        width: 100%;
+        overflow-x: auto;
+      }
+
+
+      .nav-link { white-space: nowrap; }
+    }
+
+
+    @media (max-width: 680px) {
+      .container {
+        width: min(calc(100% - 40px),var(--content-width));
+      }
+
+
+      .brand-logo.pvl { width: 94px; }
+      .brand-logo.escola { width: 118px; }
+      .brand-area { gap: 14px; }
+
+
+      .hero-inner { padding: 58px 0; }
+      .hero-title { font-size: clamp(2.5rem,13vw,3.6rem); }
+      .hero-copy { font-size: .98rem; }
+
+
+      .primary-button { width: 100%; }
+
+
+      .hero-metrics {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+
+      .library-section { padding: 70px 0 80px; }
+      .section-title { font-size: 2.35rem; }
+
+
+      .controls { grid-template-columns: 1fr; }
+      .case-grid { grid-template-columns: 1fr; }
+      .case-card { min-height: auto; }
+      .card-inner { padding: 22px; }
+
+
+      .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+
+      .footer-year { text-align: left; }
     }
   </style>
 </head>
 
+
 <body>
 
-  <div class="card">
-    <h1>PVL.ONE</h1>
-    <p>New folder test page</p>
-    <p>If you can see this, GitHub Pages is working.</p>
 
-    <a href="../">Back to Home</a>
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="#" class="brand-area" aria-label="PVL.ONE home">
+      <img
+        class="brand-logo pvl"
+        src="https://d25ltszcjeom5i.cloudfront.net/192897/hwohglaaco/PVL_Logo.png"
+        alt="PVL.ONE"
+      >
+      <img
+        class="brand-logo escola"
+        src="https://d25ltszcjeom5i.cloudfront.net/192897/kllzlhjbtb/20_Escola_logo.png"
+        alt="Escola Europea – Intermodal Transport"
+      >
+    </a>
+
+
+    <nav aria-label="Main navigation">
+      <ul class="nav-list">
+        <li><a class="nav-link active" href="#case-library">Case Studies</a></li>
+      </ul>
+    </nav>
   </div>
+</header>
+
+
+<main>
+
+
+<section class="hero">
+  <div class="container hero-inner">
+
+
+    <div>
+      <div class="eyebrow">PVL.ONE · Case Study Library</div>
+
+
+      <h1 class="hero-title">
+        Learn through real logistics decisions.
+      </h1>
+
+
+      <p class="hero-copy">
+        Explore practical logistics case studies covering airfreight,
+        maritime transport and specialised operational scenarios.
+      </p>
+
+
+      <div class="hero-actions">
+        <a class="primary-button" href="#case-library">
+          Explore Cases ↓
+        </a>
+      </div>
+    </div>
+
+
+    <div class="hero-metrics">
+      <div class="metric-card">
+        <div class="metric-value" id="heroCaseCount">20</div>
+        <div class="metric-label">Case Studies</div>
+      </div>
+
+
+      <div class="metric-card">
+        <div class="metric-value">6+</div>
+        <div class="metric-label">Operational Areas</div>
+      </div>
+
+
+      <div class="metric-card">
+        <div class="metric-value">Air · Sea · Rail</div>
+        <div class="metric-label">Special Cargo & Multimodal Operations</div>
+      </div>
+    </div>
+
+
+  </div>
+</section>
+
+
+<section class="library-section" id="case-library">
+  <div class="container">
+
+
+    <div class="library-top">
+
+
+      <div>
+        <div class="eyebrow">Case Study Index</div>
+
+
+        <h2 class="section-title">
+          Explore the operational cases.
+        </h2>
+
+
+        <p class="section-description">
+          Search by route, transport mode, cargo type or operational challenge.
+        </p>
+      </div>
+
+
+      <div class="controls">
+
+
+        <div class="search-wrapper">
+          <span class="search-icon">⌕</span>
+          <input
+            class="search-input"
+            id="searchInput"
+            type="search"
+            placeholder="Search case studies..."
+            autocomplete="off"
+          >
+        </div>
+
+
+        <div class="select-wrapper">
+          <select class="category-select" id="categoryFilter">
+            <option value="all">All Cases</option>
+            <option value="maritime">Maritime</option>
+            <option value="airfreight">Airfreight</option>
+            <option value="railway">Railway</option>
+            <option value="dangerous-goods">Dangerous Goods</option>
+            <option value="reefer">Reefer / Cold Chain</option>
+            <option value="multimodal">Multimodal</option>
+            <option value="customs">Customs</option>
+          </select>
+          <span class="select-icon">↓</span>
+        </div>
+
+
+      </div>
+    </div>
+
+
+    <div class="results-toolbar">
+      <div class="results-count" id="resultsCount">40 cases</div>
+      <button class="clear-filters" id="clearFilters" type="button">
+        Clear filters
+      </button>
+    </div>
+
+
+    <div id="caseLibraryContainer"></div>
+
+
+    <div class="empty-state" id="emptyState">
+      <div class="empty-title">No case studies found</div>
+      <div class="empty-copy">Try another search term or category.</div>
+    </div>
+
+
+  </div>
+</section>
+
+
+</main>
+
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div>
+      <div class="footer-title">
+        Port Virtual Lab · Building Skills, Breaking Borders
+      </div>
+      <div class="footer-copy">
+        Operational learning through practical logistics simulation.
+      </div>
+    </div>
+
+
+    <div class="footer-year">
+      © <span id="currentYear"></span> Escola Europea – Intermodal Transport
+    </div>
+  </div>
+</footer>
+
+
+<script>
+
+
+/*
+==========================================================
+HOW TO UPDATE THIS CASE STUDY LIBRARY
+==========================================================
+
+
+1. Each case is stored inside the `caseStudies` array.
+
+
+2. To change a case title:
+   Edit the `title` or `subtitle`.
+
+
+3. To add the real document:
+   Replace:
+
+
+   documentUrl: "PASTE_LINK_CASE_XX"
+
+
+   with:
+
+
+   documentUrl: "https://your-real-document-url.com"
+
+
+4. To add a new case:
+   Duplicate one case object,
+   change its ID, code, category and content.
+
+
+5. Do not modify the card HTML.
+   Cards are generated automatically from this data.
+==========================================================
+*/
+
+
+
+
+/* ======================================================
+   CASE STUDY DATA
+   TO CHANGE A DOCUMENT LINK:
+   Find the corresponding case below and replace
+   PASTE_LINK_CASE_XX with the real URL.
+   ====================================================== */
+
+
+const caseStudies = [
+
+
+  {
+    id: 1,
+    code: "Vehicle",
+    category: "airfreight",
+    categoryLabel: "Airfreight",
+    title: "Damietta → Civitavecchia",
+    subtitle: "Time-Critical Air Cargo",
+    description: "Plan an international airfreight operation considering routing, transit time, documentation and operational risk.",
+    origin: "Damietta, Egypt",
+    destination: "Civitavecchia, Italy",
+    cargo: "Universal Rearview Mirror",
+    level: "Intermediate",
+    duration: "45–60 min",
+    documentUrl: "https://drive.google.com/drive/folders/1bwHp085RHtHBvowrC_fbXoVa2zpeHPBN?usp=drive_link"
+  },
+
+
+  {
+    id: 2,
+    code: "Textile",
+    category: "airfreight",
+    categoryLabel: "Airfreight",
+    title: "Barcelona → Damietta",
+    subtitle: "International Airfreight Export",
+    description: "Evaluate routing, documentation, timing and operational decisions for an international air cargo export.",
+    origin: "Barcelona, Spain",
+    destination: "Damietta, Egypt",
+    cargo: "Dress Shirts",
+    level: "Intermediate",
+    duration: "45–60 min",
+    documentUrl: "https://drive.google.com/drive/folders/1cIw9jRZ-6qCuxebQFM4pp0dIACccIxSZ?usp=drive_link"
+  },
+
+
+  {
+    id: 3,
+    code: "Retail",
+    category: "airfreight",
+    categoryLabel: "Airfreight",
+    title: "Beirut → Barcelona",
+    subtitle: "Air Cargo Import Operation",
+    description: "Assess the international movement of electronic components while balancing routing, documentation and operational constraints.",
+    origin: "Beirut, Lebanon",
+    destination: "Barcelona, Spain",
+    cargo: "Electric Components",
+    level: "Intermediate",
+    duration: "45–60 min",
+    documentUrl: "https://drive.google.com/drive/folders/1dl5ooSfgnRbkbxNhj704g3FtvtWTfXX4?usp=drive_link"
+  },
+
+
+  {
+    id: 4,
+    code: "Mtools",
+    category: "airfreight",
+    categoryLabel: "Airfreight",
+    title: "Marseille → Rades",
+    subtitle: "Industrial Air Cargo",
+    description: "Plan the transport of industrial equipment while reviewing air routing, shipment documentation and operational requirements.",
+    origin: "Marseille, France",
+    destination: "Rades, Tunisia",
+    cargo: "Electric Motor (Milling Machine)",
+    level: "Intermediate",
+    duration: "45–60 min",
+    documentUrl: "https://drive.google.com/drive/folders/1eG2OwkhA3cmjuTLCksuOMcbd8YX_Je-D?usp=drive_link"
+  },
+
+
+  {
+    id: 5,
+    code: "M&E",
+    category: "airfreight",
+    categoryLabel: "Airfreight",
+    title: "Aqaba → Marseille",
+    subtitle: "Industrial Components Shipment",
+    description: "Design an airfreight solution for industrial machine components while considering timing, routing and cargo handling.",
+    origin: "Aqaba, Jordan",
+    destination: "Marseille, France",
+    cargo: "Bottling Machine Roller Shafts",
+    level: "Intermediate",
+    duration: "45–60 min",
+    documentUrl: "https://drive.google.com/drive/folders/1esDp-hyYWZp2nOBb8LXSmu7cX6cNGDMb?usp=drive_link"
+  },
+
+
+  {
+    id: 6,
+    code: "Food",
+    category: "airfreight",
+    categoryLabel: "Airfreight",
+    title: "Valencia → Aqaba",
+    subtitle: "Perishable Air Cargo",
+    description: "Plan the international transport of perishable produce while considering transit time, handling and shipment conditions.",
+    origin: "Valencia, Spain",
+    destination: "Aqaba, Jordan",
+    cargo: "Red Apples",
+    level: "Intermediate",
+    duration: "45–60 min",
+    documentUrl: "https://drive.google.com/drive/folders/1fwgjOVAjBxSDM-ZcAgg9n7ZO0F8ZpPIZ?usp=drive_link"
+  },
+
+
+  {
+    id: 7,
+    code: "Chem",
+    category: "airfreight",
+    categoryLabel: "Airfreight",
+    title: "Civitavecchia → Beirut",
+    subtitle: "Consumer Product Airfreight",
+    description: "Evaluate an international airfreight movement involving cosmetic products, documentation and operational planning.",
+    origin: "Civitavecchia, Italy",
+    destination: "Beirut, Lebanon",
+    cargo: "Skin Generator Facial Cream",
+    level: "Intermediate",
+    duration: "45–60 min",
+    documentUrl: "https://drive.google.com/drive/folders/1g6IoreBDOgOjP-TEUIrL2pqgNaN_XIXg?usp=drive_link"
+  },
+
+
+  {
+    id: 8,
+    code: "Building Materials",
+    category: "airfreight",
+    categoryLabel: "Airfreight",
+    title: "Rades → Valencia",
+    subtitle: "Air Cargo Routing Challenge",
+    description: "Analyse routing, shipment requirements and operational trade-offs for an international cargo movement.",
+    origin: "Rades, Tunisia",
+    destination: "Valencia, Spain",
+    cargo: "Clay Bricks",
+    level: "Intermediate",
+    duration: "45–60 min",
+    documentUrl: "https://drive.google.com/drive/folders/1hcBCnICHsofnao21sLyfvmHKNTZg25UP?usp=drive_link"
+  },
+
+
+   {
+    id: 9,
+    code: "Pharma",
+    category: "airfreight",
+    categoryLabel: "Airfreight",
+    title: "Lisbon → Jeddah",
+    subtitle: "Personal Care Goods",
+    description: "Plan the air shipment of body wash from Lisbon to Jeddah.",
+    origin: "Lisbon, Portugal",
+    destination: "Jeddah, Saudi Arabia",
+    cargo: "Body Wash",
+    level: "Intermediate",
+    duration: "45–60 min",
+    documentUrl: "https://drive.google.com/drive/folders/1AO5QoeYnLpDJXF0pwl1wwE1UmyyRqPfx?usp=drive_link"
+  },
+    {
+    id: 10,
+    code: "Retail",
+    category: "airfreight",
+    categoryLabel: "Airfreight",
+    title: "Jeddah → Lisbon",
+    subtitle: "Retail Electronics",
+    description: "Organise an air export activity and prepare the key commercial documentation for the shipment.",
+    origin: "Jeddah, Saudi Arabia",
+    destination: "Lisbon, Portugal",
+    cargo: "Wireless Speakers",
+    level: "Intermediate",
+    duration: "45–60 min",
+    documentUrl: "https://drive.google.com/drive/folders/1IdVQ2FJ-QSmixJrcwip2TVwTGdeUUSRT?usp=drive_link"
+  },
+   {
+    id: 11,
+    code: "Textile",
+    category: "airfreight",
+    categoryLabel: "Airfreight",
+    title: "Casablanca → Madrid",
+    subtitle: "Textile Cargo",
+    description: "Coordinate an international air export operation and manage the required shipment documentation.",
+    origin: "Casablanca, Morocco",
+    destination: "Madrid, Spain",
+    cargo: "Ties",
+    level: "Intermediate",
+    duration: "45–60 min",
+    documentUrl: "https://drive.google.com/drive/folders/10AdHW84r-EnFx50vDaobuUUlSvE7IcH9?usp=drive_link"
+  },
+
+
+  {
+    id: 12,
+    code: "Health",
+    category: "airfreight",
+    categoryLabel: "Airfreight",
+    title: "Piraeus → Casablanca",
+    subtitle: "Medical Equipment",
+    description: "Plan an air export operation and work through the essential documentation for international transport.",
+    origin: "Piraeus, Greece",
+    destination: "Casablanca, Morocco",
+    cargo: "CardioSync Smart ECG Monitor",
+    level: "Intermediate",
+    duration: "45–60 min",
+    documentUrl: "https://drive.google.com/drive/folders/1rtEHrS-Bv0Ey5ZHOIv8wJUQkGXT8iPA4?usp=drive_link"
+  },
+
+
+    {
+    id: 13,
+    code: "Vehicles",
+    category: "airfreight",
+    categoryLabel: "Airfreight",
+    title: "Madrid → Amman",
+    subtitle: "Automotive Cargo",
+    description: "Organise an international air export shipment and manage the commercial documents required for dispatch.",
+    origin: "Madrid, Spain",
+    destination: "Amman, Jordan",
+    cargo: "Wheel Rim",
+    level: "Intermediate",
+    duration: "45–60 min",
+    documentUrl: "https://drive.google.com/drive/folders/1cJtT9Iids_SBOTmPqei5R8dLhjBnDy6H?usp=drive_link"
+  },
+
+
+    {
+    id: 14,
+    code: "Building Materials",
+    category: "airfreight",
+    categoryLabel: "Airfreight",
+    title: "Amman → Lisbon",
+    subtitle: "Building Materials",
+    description: "Coordinate an air export operation while reviewing documentation and shipment requirements.",
+    origin: "Amman, Jordan",
+    destination: "Lisbon, Portugal",
+    cargo: "Rockwool Panels",
+    level: "Intermediate",
+    duration: "45–60 min",
+    documentUrl: "https://drive.google.com/drive/folders/1dgljDHkH62V8ur6JqJwIxEfBAx7J5Xqf?usp=drive_link"
+  },
+
+
+      {
+    id: 15,
+    code: "Food",
+    category: "airfreight",
+    categoryLabel: "Airfreight",
+    title: "Rome → Abu Dhabi",
+    subtitle: "Fresh Produce",
+    description: "Plan an international air export activity and prepare the main documentation needed for the shipment.",
+    origin: "Rome, Italy",
+    destination: "Abu Dhabi, UAE",
+    cargo: "Banana",
+    level: "Intermediate",
+    duration: "45–60 min",
+    documentUrl: "https://drive.google.com/drive/folders/17HYYmyceuQQmJG1M0wvYZVwXQunxkWj0?usp=drive_link"
+  },
+
+
+        {
+    id: 16,
+    code: "Agro",
+    category: "airfreight",
+    categoryLabel: "Airfreight",
+    title: "Nouakchott → Civitavecchia",
+    subtitle: "Agricultural Cargo",
+    description: "Manage an air export shipment and work through the key commercial documentation involved in the operation.",
+    origin: "Nouakchott, Mauritania",
+    destination: "Civitavecchia, Italy",
+    cargo: "Soybeans",
+    level: "Intermediate",
+    duration: "45–60 min",
+    documentUrl: "https://drive.google.com/drive/folders/15m-WigVdlurBE2NIcr8ZmQt9jEUAlbWY?usp=drive_link"
+  },
+
+
+          {
+    id: 17,
+    code: "Building Materials",
+    category: "airfreight",
+    categoryLabel: "Airfreight",
+    title: "Algiers → Piraeus",
+    subtitle: "Building Materials",
+    description: "Plan an international air export activity and prepare the main documentation needed for the shipment.",
+    origin: "Algiers, Algeria",
+    destination: "Piraeus, Greece",
+    cargo: "Ceramic Tiles",
+    level: "Intermediate",
+    duration: "45–60 min",
+    documentUrl: "https://drive.google.com/drive/folders/1p3c2_T4W_oTp0ntPOZWvzU3f8OxjZHqs?usp=drive_link"
+  },
+
+
+            {
+    id: 18,
+    code: "Vehicle",
+    category: "airfreight",
+    categoryLabel: "Airfreight",
+    title: "Rotterdam → Nouakchott",
+    subtitle: "Automotive Parts",
+    description: "Coordinate an air export activity and manage the main commercial documentation.",
+    origin: "Rotterdam, Netherlands",
+    destination: "Nouakchott, Mauritania",
+    cargo: "Alloy Wheels",
+    level: "Intermediate",
+    duration: "45–60 min",
+    documentUrl: "https://drive.google.com/drive/folders/17HDLkzjodWsjlcwAkHizXaBGEp83A1LQ?usp=drive_link"
+  },
+
+
+              {
+    id: 19,
+    code: "Textile",
+    category: "airfreight",
+    categoryLabel: "Airfreight",
+    title: "Nouakchott → Civitavecchia",
+    subtitle: "Workwear & Clothing",
+    description: "Plan an international air export shipment and prepare the documentation required.",
+    origin: "Nouakchott, Mauritania",
+    destination: "Civitavecchia, Italy",
+    cargo: "Workwear Set",
+    level: "Intermediate",
+    duration: "45–60 min",
+    documentUrl: "https://drive.google.com/drive/folders/1a4g1TOTkJP1BYklz3NURTcg2vvwRQbnV?usp=drive_link"
+  },
+
+
+               {
+    id: 20,
+    code: "M&E",
+    category: "airfreight",
+    categoryLabel: "Airfreight",
+    title: "Piraeus → Jeddah",
+    subtitle: "Industrial Equipment",
+    description: "Manage an international air export operation.",
+    origin: "Piraeus, Greece",
+    destination: "Jeddah, Saudi Arabia",
+    cargo: "Water Purification Units",
+    level: "Intermediate",
+    duration: "45–60 min",
+    documentUrl: "https://drive.google.com/drive/folders/1Fcjeir1Y2sZ_IVn4M07WomFNcSOSi8Gp?usp=drive_link"
+  },
+
+
+ /* ======================================================
+   MARITIME CASE STUDIES
+   ====================================================== */
+
+
+{
+  id: 21,
+  code: "Vehicle",
+  category: "maritime",
+  categoryLabel: "Maritime",
+  title: "Damietta → Civitavecchia",
+  subtitle: "Vehicle Cargo",
+  description: "Plan an international sea export operation and prepare the key documentation required for shipment.",
+  origin: "Damietta, Egypt",
+  destination: "Civitavecchia, Italy",
+  cargo: "Universal Rearview Mirror",
+  sector: "Vehicle",
+  mode: "Sea Freight",
+  documentUrl: "https://drive.google.com/drive/folders/1bjU6o5jgN0-F1z7c0-JqzAlQ9bCQdkYW?usp=drive_link"
+},
+
+
+{
+  id: 22,
+  code: "Textile",
+  category: "maritime",
+  categoryLabel: "Maritime",
+  title: "Barcelona → Damietta",
+  subtitle: "Textile Cargo",
+  description: "Organise a sea export shipment and work through the main commercial and transport documentation.",
+  origin: "Barcelona, Spain",
+  destination: "Damietta, Egypt",
+  cargo: "Dress Shirts",
+  sector: "Textile",
+  mode: "Sea Freight",
+  documentUrl: "https://drive.google.com/drive/folders/1cGy-kXialy6KVbzBMo3JWHHj6jZGH9sS?usp=drive_link"
+},
+
+
+{
+  id: 23,
+  code: "Retail",
+  category: "maritime",
+  categoryLabel: "Maritime",
+  title: "Beirut → Barcelona",
+  subtitle: "Retail Cargo",
+  description: "Coordinate an international sea export operation and complete the documentation needed for the shipment.",
+  origin: "Beirut, Lebanon",
+  destination: "Barcelona, Spain",
+  cargo: "Electric Components",
+  sector: "Retail",
+  mode: "Sea Freight",
+  documentUrl: "https://drive.google.com/drive/folders/1cpvsiR5-MmZ4ikgmRZMm0gjXsN-7tWux?usp=drive_link"
+},
+
+
+{
+  id: 24,
+  code: "Mtools",
+  category: "maritime",
+  categoryLabel: "Maritime",
+  title: "Marseille → Rades",
+  subtitle: "Industrial Machinery",
+  description: "Plan a maritime export operation while reviewing shipment requirements and commercial documentation.",
+  origin: "Marseille, France",
+  destination: "Rades, Tunisia",
+  cargo: "Electric Motor (Milling Machine)",
+  sector: "Mtools",
+  mode: "Sea Freight",
+  documentUrl: "https://drive.google.com/drive/folders/1eGPmptR8RfkUZSozFecT-y7c1JBKTMm6?usp=drive_link"
+},
+
+
+{
+  id: 25,
+  code: "M&E",
+  category: "maritime",
+  categoryLabel: "Maritime",
+  title: "Aqaba → Marseille",
+  subtitle: "Machinery & Equipment",
+  description: "Organise an international sea export shipment and prepare the key documents required for the operation.",
+  origin: "Aqaba, Jordan",
+  destination: "Marseille, France",
+  cargo: "Bottling Machine Roller Shafts",
+  sector: "M&E",
+  mode: "Sea Freight",
+  documentUrl: "https://drive.google.com/drive/folders/1eqBilHflU77IBAh2rIpQcwnjhId88DLH?usp=drive_link"
+},
+
+
+{
+  id: 26,
+  code: "Food",
+  category: "maritime",
+  categoryLabel: "Maritime",
+  title: "Valencia → Aqaba",
+  subtitle: "Fresh Food",
+  description: "Plan a sea export operation and manage the main documentation required for international shipment.",
+  origin: "Valencia, Spain",
+  destination: "Aqaba, Jordan",
+  cargo: "Red Apples",
+  sector: "Food",
+  mode: "Sea Freight",
+  documentUrl: "https://drive.google.com/drive/folders/1fgd8PuTNhH2ArxaoXhx8XoX1wQJ2w6CF?usp=drive_link"
+},
+
+
+{
+  id: 27,
+  code: "Chem",
+  category: "maritime",
+  categoryLabel: "Maritime",
+  title: "Civitavecchia → Beirut",
+  subtitle: "Cosmetic Products",
+  description: "Coordinate an international sea export activity, focusing on documentation and shipment preparation.",
+  origin: "Civitavecchia, Italy",
+  destination: "Beirut, Lebanon",
+  cargo: "Skin Generator Facial Cream",
+  sector: "Chem",
+  mode: "Sea Freight",
+  documentUrl: "https://drive.google.com/drive/folders/1gRncPql0A8-39Hujh4KtsSr-e9Bjzeyn?usp=drive_link"
+},
+
+
+{
+  id: 28,
+  code: "Building Materials",
+  category: "maritime",
+  categoryLabel: "Maritime",
+  title: "Rades → Valencia",
+  subtitle: "Building Materials",
+  description: "Manage a maritime export operation and prepare the commercial documents required for shipment.",
+  origin: "Rades, Tunisia",
+  destination: "Valencia, Spain",
+  cargo: "Clay Bricks",
+  sector: "Building Materials",
+  mode: "Sea Freight",
+  documentUrl: "https://drive.google.com/drive/folders/1hXSxMXgbV3Se4oSbgLf_p0mT9-FIYLVs?usp=drive_link"
+},
+
+
+{
+  id: 29,
+  code: "Pharma",
+  category: "maritime",
+  categoryLabel: "Maritime",
+  title: "Lisbon → Jeddah",
+  subtitle: "Personal Care Goods",
+  description: "Plan an international sea export shipment and review the documentation needed for the operation.",
+  origin: "Lisbon, Portugal",
+  destination: "Jeddah, Saudi Arabia",
+  cargo: "Body Wash",
+  sector: "Pharma",
+  mode: "Sea Freight",
+  documentUrl: "https://drive.google.com/drive/folders/1gfY34x0RtvPN7c7pMXbZfM7fHd4-j1pX?usp=drive_link"
+},
+
+
+{
+  id: 30,
+  code: "Retail",
+  category: "maritime",
+  categoryLabel: "Maritime",
+  title: "Jeddah → Lisbon",
+  subtitle: "Retail Electronics",
+  description: "Organise a maritime export operation and prepare the main documents needed to move the shipment.",
+  origin: "Jeddah, Saudi Arabia",
+  destination: "Lisbon, Portugal",
+  cargo: "Wireless Speakers",
+  sector: "Retail",
+  mode: "Sea Freight",
+  documentUrl: "https://drive.google.com/drive/folders/1WXlK8wtVEDkO30lZ9ShGuvBL99SB301i?usp=drive_link"
+},
+
+
+{
+  id: 31,
+  code: "Textile",
+  category: "maritime",
+  categoryLabel: "Maritime",
+  title: "Casablanca → Valencia / Barcelona",
+  subtitle: "Textile Cargo",
+  description: "Coordinate a sea export operation and manage the documentation required for the international shipment.",
+  origin: "Casablanca, Morocco",
+  destination: "Valencia / Barcelona, Spain",
+  cargo: "Ties",
+  sector: "Textile",
+  mode: "Sea Freight",
+  documentUrl: "https://drive.google.com/drive/folders/1qRHMm93IcrmO3EOJIZZcuACeZ4NJ0tFU?usp=drive_link"
+},
+
+
+{
+  id: 32,
+  code: "Health",
+  category: "maritime",
+  categoryLabel: "Maritime",
+  title: "Piraeus → Casablanca",
+  subtitle: "Medical Equipment",
+  description: "Plan an international maritime export and work through the key documentation for the operation.",
+  origin: "Piraeus, Greece",
+  destination: "Casablanca, Morocco",
+  cargo: "CardioSync Smart ECG Monitor",
+  sector: "Health",
+  mode: "Sea Freight",
+  documentUrl: "https://drive.google.com/drive/folders/1Sj2Ng-pSa0FAwLRixVL8KqtPtoGaE7IcX?usp=drive_link"
+},
+
+
+{
+  id: 33,
+  code: "Vehicles",
+  category: "maritime",
+  categoryLabel: "Maritime",
+  title: "Barcelona / Valencia → Aqaba",
+  subtitle: "Automotive Cargo",
+  description: "Organise a sea export shipment and prepare the commercial and transport documents required for dispatch.",
+  origin: "Barcelona / Valencia, Spain",
+  destination: "Aqaba, Jordan",
+  cargo: "Wheel Rim",
+  sector: "Vehicles",
+  mode: "Sea Freight",
+  documentUrl: "https://drive.google.com/drive/folders/1d3EJidc3r5dyqHyq9T40lquzr3-Fumss?usp=drive_link"
+},
+
+
+{
+  id: 34,
+  code: "Building Materials",
+  category: "maritime",
+  categoryLabel: "Maritime",
+  title: "Aqaba → Lisbon",
+  subtitle: "Building Materials",
+  description: "Coordinate an international sea export operation and review the required shipment documentation.",
+  origin: "Aqaba, Jordan",
+  destination: "Lisbon, Portugal",
+  cargo: "Rockwool Panels",
+  sector: "Building Materials",
+  mode: "Sea Freight",
+  documentUrl: "https://drive.google.com/drive/folders/1MHtVI5flz-OjSA3YUMAhT1ej0hdEGCCu?usp=drive_link"
+},
+
+
+{
+  id: 35,
+  code: "Food",
+  category: "maritime",
+  categoryLabel: "Maritime",
+  title: "Valencia → Casablanca",
+  subtitle: "Fresh Produce",
+  description: "Plan a maritime export activity and prepare the main documentation needed for the international shipment.",
+  origin: "Valencia, Spain",
+  destination: "Casablanca, Morocco",
+  cargo: "Banana",
+  sector: "Food",
+  mode: "Sea Freight",
+  documentUrl: "https://drive.google.com/drive/folders/1U3AYSKXTCZrsUAPCmvPVbQB2TsqrPi-8?usp=drive_link"
+},
+
+
+{
+  id: 36,
+  code: "Agro",
+  category: "maritime",
+  categoryLabel: "Maritime",
+  title: "Barcelona → Aqaba",
+  subtitle: "Agricultural Cargo",
+  description: "Manage a sea export shipment and work through the key commercial documentation for the operation.",
+  origin: "Barcelona, Spain",
+  destination: "Aqaba, Jordan",
+  cargo: "Soybeans",
+  sector: "Agro",
+  mode: "Sea Freight",
+  documentUrl: "https://drive.google.com/drive/folders/1NQ6ugbjfsG2qhLzOjTm1dbOle-TxFH_V?usp=drive_link"
+},
+
+
+{
+  id: 37,
+  code: "Building Materials",
+  category: "maritime",
+  categoryLabel: "Maritime",
+  title: "Algiers → Piraeus",
+  subtitle: "Building Materials",
+  description: "Organise an international maritime export and prepare the documentation required for shipment.",
+  origin: "Algiers, Algeria",
+  destination: "Piraeus, Greece",
+  cargo: "Ceramic Tiles",
+  sector: "Building Materials",
+  mode: "Sea Freight",
+  documentUrl: "https://drive.google.com/drive/folders/1zYnJ76oO2awuz5cVDlHE7hDURcbyvYoA?usp=drive_link"
+},
+
+
+{
+  id: 38,
+  code: "Fine Cars",
+  category: "maritime",
+  categoryLabel: "Maritime",
+  title: "Rotterdam → Nouakchott",
+  subtitle: "Automotive Parts",
+  description: "Coordinate a sea export operation and manage the main commercial documentation for the shipment.",
+  origin: "Rotterdam, Netherlands",
+  destination: "Nouakchott, Mauritania",
+  cargo: "Alloy Wheels",
+  sector: "Fine Cars",
+  mode: "Sea Freight",
+  documentUrl: "https://drive.google.com/drive/folders/1l0s9T9i6a3ceMtYvUdfd2VqbEL6rzAj7?usp=drive_link"
+},
+
+
+{
+  id: 39,
+  code: "Fine Clothing",
+  category: "maritime",
+  categoryLabel: "Maritime",
+  title: "Nouakchott → Civitavecchia",
+  subtitle: "Workwear & Clothing",
+  description: "Plan an international sea export shipment and prepare the documentation required for the operation.",
+  origin: "Nouakchott, Mauritania",
+  destination: "Civitavecchia, Italy",
+  cargo: "Workwear Set",
+  sector: "Fine Clothing",
+  mode: "Sea Freight",
+  documentUrl: "https://drive.google.com/drive/folders/1ZfTWK8lAOcu4odxWlYuUbCejN7X60ubi?usp=drive_link"
+},
+
+
+{
+  id: 40,
+  code: "SEA-20",
+  category: "maritime",
+  categoryLabel: "Maritime",
+  title: "Piraeus → Jeddah",
+  subtitle: "Industrial Equipment",
+  description: "Manage an international maritime export operation and work through the key shipment documentation.",
+  origin: "Piraeus, Greece",
+  destination: "Jeddah, Saudi Arabia",
+  cargo: "Water Purification Units",
+  sector: "M&E",
+  mode: "Sea Freight",
+  documentUrl: "https://drive.google.com/drive/folders/1N_dFoXjScF9Kb14cU29YtluXRCeB8IOZ?usp=drive_link"
+},
+
+
+  {
+    id: 14,
+    code: "RAIL-01",
+    category: "railway",
+    categoryLabel: "Railway",
+    title: "Barcelona → Lyon",
+    subtitle: "Rail Freight Operation",
+    description: "Assess a European rail freight movement by analysing routing, operational requirements and transport documentation.",
+    origin: "Barcelona",
+    destination: "Lyon",
+    cargo: "General Cargo",
+    level: "Intermediate",
+    duration: "45–60 min",
+    documentUrl: "PASTE_LINK_CASE_14"
+  },
+
+
+  {
+    id: 15,
+    code: "RAIL-02",
+    category: "railway",
+    categoryLabel: "Railway",
+    title: "Barcelona → Central Europe",
+    subtitle: "Intermodal Rail Corridor",
+    description: "Design an intermodal rail corridor connecting Barcelona with Central Europe while evaluating operational alternatives.",
+    origin: "Barcelona",
+    destination: "Central Europe",
+    cargo: "Containerised Cargo",
+    level: "Intermediate",
+    duration: "45–60 min",
+    documentUrl: "PASTE_LINK_CASE_15"
+  },
+
+
+  {
+    id: 16,
+    code: "DG-01",
+    category: "dangerous-goods",
+    categoryLabel: "Dangerous Goods",
+    title: "Barcelona → Rotterdam",
+    subtitle: "Dangerous Goods Maritime Export",
+    description: "Evaluate the operational, documentary and safety requirements of a dangerous goods maritime export shipment.",
+    origin: "Barcelona",
+    destination: "Rotterdam",
+    cargo: "Dangerous Goods",
+    level: "Advanced",
+    duration: "60 min",
+    documentUrl: "PASTE_LINK_CASE_16"
+  },
+
+
+  {
+    id: 17,
+    code: "REEFER-01",
+    category: "reefer",
+    categoryLabel: "Reefer / Cold Chain",
+    title: "Valencia → Rotterdam",
+    subtitle: "Reefer Food Shipment",
+    description: "Plan a refrigerated food shipment while maintaining temperature integrity throughout the international logistics chain.",
+    origin: "Valencia",
+    destination: "Rotterdam",
+    cargo: "Temperature-Controlled Food",
+    level: "Intermediate",
+    duration: "45–60 min",
+    documentUrl: "PASTE_LINK_CASE_17"
+  },
+
+
+  {
+    id: 18,
+    code: "MULTI-01",
+    category: "multimodal",
+    categoryLabel: "Multimodal",
+    title: "Barcelona → Munich",
+    subtitle: "Sea + Rail Multimodal Operation",
+    description: "Build a multimodal transport solution combining maritime and rail services while comparing operational alternatives.",
+    origin: "Barcelona",
+    destination: "Munich",
+    cargo: "Containerised Cargo",
+    level: "Advanced",
+    duration: "60 min",
+    documentUrl: "PASTE_LINK_CASE_18"
+  },
+
+
+  {
+    id: 19,
+    code: "CUS-01",
+    category: "customs",
+    categoryLabel: "Customs",
+    title: "Barcelona Import Operation",
+    subtitle: "Customs Clearance Challenge",
+    description: "Review an import operation and determine the documentation and customs procedures required for cargo clearance.",
+    origin: "International Origin",
+    destination: "Barcelona",
+    cargo: "Imported Goods",
+    level: "Intermediate",
+    duration: "45–60 min",
+    documentUrl: "PASTE_LINK_CASE_19"
+  },
+
+
+  {
+    id: 20,
+    code: "CUS-02",
+    category: "customs",
+    categoryLabel: "Customs",
+    title: "Barcelona Export Operation",
+    subtitle: "Customs & Documentation Case",
+    description: "Prepare an export operation by identifying the customs, commercial and transport documentation required.",
+    origin: "Barcelona",
+    destination: "International Destination",
+    cargo: "Export Cargo",
+    level: "Intermediate",
+    duration: "45–60 min",
+    documentUrl: "PASTE_LINK_CASE_20"
+  }
+
+
+];
+
+
+const categoryOrder = [
+  "maritime",
+  "airfreight",
+  "railway",
+  "dangerous-goods",
+  "reefer",
+  "multimodal",
+  "customs"
+];
+
+
+const categoryLabels = {
+  airfreight: "Airfreight",
+  maritime: "Maritime",
+  railway: "Railway",
+  "dangerous-goods": "Dangerous Goods",
+  reefer: "Reefer / Cold Chain",
+  multimodal: "Multimodal",
+  customs: "Customs"
+};
+
+
+const searchInput = document.getElementById("searchInput");
+const categoryFilter = document.getElementById("categoryFilter");
+const caseLibraryContainer = document.getElementById("caseLibraryContainer");
+const resultsCount = document.getElementById("resultsCount");
+const emptyState = document.getElementById("emptyState");
+const clearFilters = document.getElementById("clearFilters");
+
+
+function escapeHTML(value = "") {
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+
+function getCaseIcon(category) {
+  const icons = {
+    airfreight: "✈",
+    maritime: "⚓",
+    railway: "▰",
+    "dangerous-goods": "!",
+    reefer: "❄",
+    multimodal: "⇄",
+    customs: "▤"
+  };
+
+
+  return icons[category] || "•";
+}
+
+
+function hasValidDocument(item) {
+  return Boolean(
+    item.documentUrl &&
+    item.documentUrl.trim() !== "" &&
+    !item.documentUrl.includes("PASTE_LINK")
+  );
+}
+
+
+function createCaseCard(item) {
+  const available = hasValidDocument(item);
+
+
+  const buttonHTML = available
+    ? `
+      <a
+        class="case-button"
+        href="${escapeHTML(item.documentUrl)}"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Open Case →
+      </a>
+    `
+    : `
+      <button class="case-button disabled" type="button" disabled>
+        Coming Soon
+      </button>
+    `;
+
+
+  return `
+    <article class="case-card" data-category="${escapeHTML(item.category)}">
+      <div class="card-inner">
+
+
+        <div class="card-topline">
+          <div class="category-badge">
+            ${escapeHTML(item.categoryLabel)} · ${escapeHTML(item.code)}
+          </div>
+
+
+          <div class="case-icon" aria-hidden="true">
+            ${getCaseIcon(item.category)}
+          </div>
+        </div>
+
+
+        <h3 class="case-title">
+          ${escapeHTML(item.title)}
+        </h3>
+
+
+        <div class="case-subtitle">
+          ${escapeHTML(item.subtitle)}
+        </div>
+
+
+        <p class="case-description">
+          ${escapeHTML(item.description)}
+        </p>
+
+
+        <div class="route-row">
+          <span class="route-dot"></span>
+          <span>${escapeHTML(item.origin)}</span>
+          <span class="route-arrow">→</span>
+          <span>${escapeHTML(item.destination)}</span>
+        </div>
+
+
+        <div class="metadata">
+          <span class="meta-chip">${escapeHTML(item.cargo)}</span>
+        </div>
+
+
+        <div class="card-footer">
+          ${buttonHTML}
+        </div>
+
+
+      </div>
+    </article>
+  `;
+}
+
+
+function matchesSearch(item, query) {
+  if (!query) return true;
+
+
+  const searchableText = [
+    item.code,
+    item.category,
+    item.categoryLabel,
+    item.title,
+    item.subtitle,
+    item.description,
+    item.origin,
+    item.destination,
+    item.cargo,
+    item.level,
+    item.duration
+  ].join(" ").toLowerCase();
+
+
+  return searchableText.includes(query);
+}
+
+
+function getFilteredCases() {
+  const query = searchInput.value.trim().toLowerCase();
+  const selectedCategory = categoryFilter.value;
+
+
+  return caseStudies.filter(item => {
+    const categoryMatches =
+      selectedCategory === "all" ||
+      item.category === selectedCategory;
+
+
+    return categoryMatches && matchesSearch(item, query);
+  });
+}
+
+
+function renderCases() {
+  const filteredCases = getFilteredCases();
+
+
+  const searchActive = searchInput.value.trim() !== "";
+  const filterActive = categoryFilter.value !== "all";
+  const filteringActive = searchActive || filterActive;
+
+
+  resultsCount.textContent =
+    `${filteredCases.length} ${filteredCases.length === 1 ? "case" : "cases"}`;
+
+
+  clearFilters.classList.toggle("visible", filteringActive);
+  emptyState.classList.toggle("visible", filteredCases.length === 0);
+
+
+  if (!filteredCases.length) {
+    caseLibraryContainer.innerHTML = "";
+    return;
+  }
+
+
+  if (filteringActive) {
+    caseLibraryContainer.innerHTML = `
+      <div class="case-grid">
+        ${filteredCases.map(createCaseCard).join("")}
+      </div>
+    `;
+    return;
+  }
+
+
+  caseLibraryContainer.innerHTML = categoryOrder.map(category => {
+    const cases = filteredCases.filter(item => item.category === category);
+
+
+    if (!cases.length) return "";
+
+
+    return `
+      <section class="category-section">
+        <h3 class="category-heading">
+          ${categoryLabels[category]}
+        </h3>
+
+
+        <div class="case-grid">
+          ${cases.map(createCaseCard).join("")}
+        </div>
+      </section>
+    `;
+  }).join("");
+}
+
+
+searchInput.addEventListener("input", renderCases);
+categoryFilter.addEventListener("change", renderCases);
+
+
+clearFilters.addEventListener("click", () => {
+  searchInput.value = "";
+  categoryFilter.value = "all";
+  renderCases();
+  searchInput.focus();
+});
+
+
+document.getElementById("currentYear").textContent =
+  new Date().getFullYear();
+
+
+document.getElementById("heroCaseCount").textContent =
+  caseStudies.length;
+
+
+renderCases();
+
+
+</script>
+
 
 </body>
 </html>
+
