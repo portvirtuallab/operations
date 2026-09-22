@@ -40,6 +40,10 @@ body{overflow-x:hidden}
 a,button{font:inherit}
 ::selection{background:var(--orange);color:#fff}
 
+/* Visible keyboard focus everywhere (uses --focus) */
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:8px}
+.toolbar :focus-visible{outline-offset:2px}
+
 .toolbar{
   position:sticky;top:0;z-index:50;
   display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center;
@@ -85,14 +89,21 @@ a,button{font:inherit}
 
 /* ===== Workflow overlay ===== */
 .workflow-grid{
-  position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+  position:relative;display:grid;
+  grid-template-columns:repeat(var(--cols,4),minmax(0,1fr));
   gap:1.6%;align-items:end;padding:3.2% 0 .8%;
 }
-@media(max-width:900px){.workflow-grid{grid-template-columns:repeat(2,1fr);gap:16px}}
+/* Connector line spans from the centre of the first tile to the centre of the last,
+   derived from --cols so it stays aligned on 3-, 4- and 6-column rows. */
 .workflow-grid::before{
-  content:"";position:absolute;left:6.5%;right:6.5%;top:5.2%;height:2px;background:#2559a9;
+  content:"";position:absolute;
+  left:calc(50% / var(--cols,4));right:calc(50% / var(--cols,4));
+  top:5.2%;height:2px;background:#2559a9;
 }
-@media(max-width:900px){.workflow-grid::before{display:none}}
+@media(max-width:900px){
+  .workflow-grid{grid-template-columns:repeat(2,1fr);gap:16px}
+  .workflow-grid::before{display:none}
+}
 .workflow-step{
   position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;
   gap:3%;padding:15% 5% 9%;border:2px solid rgba(230,174,27,.5);border-radius:14px;
@@ -160,7 +171,7 @@ a,button{font:inherit}
 .closure-box h3{margin:2px 0 4px;color:var(--green);font-size:15px;font-weight:900;text-transform:uppercase;letter-spacing:.02em}
 .closure-box p{margin:0;font-size:13.5px;color:#2a3a5c;line-height:1.55}
 
-/* ===== CPT / CIP diagram ===== */
+/* ===== CPT diagram ===== */
 .cip-legend{display:flex;flex-wrap:wrap;gap:18px;margin-bottom:24px}
 .cip-legend .item{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;color:#2a3a5c}
 .cip-legend .swatch{width:16px;height:16px;border-radius:4px;flex:none}
@@ -169,14 +180,17 @@ a,button{font:inherit}
 .sw-red{background:var(--red)}
 .sw-grey{background:var(--grey-line)}
 .cip-diagram{position:relative;padding:16px 10px 26px;overflow-x:auto}
-.cip-track{position:relative;display:flex;min-width:1080px;padding-top:8px}
+.cip-track{position:relative;display:flex;min-width:880px;padding-top:8px}
 .cip-point{flex:1;position:relative;display:flex;flex-direction:column;align-items:center;text-align:center}
 .cip-point .dot{width:20px;height:20px;border-radius:50%;background:var(--navy);border:3px solid #fff;box-shadow:0 0 0 2px rgba(7,45,115,.25);z-index:3}
 .cip-point.risk .dot{background:var(--grey-line);box-shadow:0 0 0 4px rgba(138,148,166,.35)}
-.cip-point label{margin-top:10px;font-size:11.2px;font-weight:800;color:var(--navy);max-width:120px;line-height:1.25}
-.cip-line{position:absolute;top:18px;left:5%;right:5%;height:4px;background:rgba(7,45,115,.15);border-radius:4px;z-index:1}
-.cip-line .seller{position:absolute;top:0;left:0;height:100%;background:var(--orange);border-radius:4px}
-.cip-line .buyer{position:absolute;top:0;right:0;height:100%;background:var(--green);border-radius:4px}
+.cip-point .cip-label{margin-top:10px;font-size:11.2px;font-weight:800;color:var(--navy);max-width:120px;line-height:1.25}
+.cip-point.risk .cip-label{color:#5d6a83}
+/* Line runs centre-of-first-point to centre-of-last-point: 50% / number of points. */
+.cip-line{position:absolute;top:18px;left:calc(50% / var(--pts,7));right:calc(50% / var(--pts,7));height:4px;background:rgba(7,45,115,.15);border-radius:4px;z-index:1}
+.cip-line .seller{position:absolute;top:0;left:0;height:100%;background:var(--orange);border-radius:4px;z-index:2}
+.cip-line .buyer{position:absolute;top:0;right:0;height:100%;background:var(--green);border-radius:4px;z-index:2}
+.cip-line .risk-mark{position:absolute;top:-6px;width:4px;height:16px;background:var(--grey-line);border-radius:2px;transform:translateX(-50%);z-index:4}
 .cip-modes{margin-top:22px;display:flex;gap:14px;flex-wrap:wrap}
 .mode-chip{background:var(--navy);color:#fff;padding:7px 14px;border-radius:999px;font-size:12px;font-weight:800}
 .cip-note{margin-top:22px;font-size:13px;color:#43516f;background:var(--navy-soft);border-radius:var(--radius-md);padding:14px 18px;line-height:1.55}
@@ -206,13 +220,15 @@ a,button{font:inherit}
 .back-to-top.is-visible{opacity:1;pointer-events:auto;transform:translateY(0) scale(1)}
 .back-to-top:hover{background:var(--blue)}
 
+@page{margin:10mm}
 @media print{
   html,body{background:#fff}
   .toolbar,.back-to-top{display:none!important}
   .document{max-width:none;padding:0}
-  .page{width:100vw;box-shadow:none;border-radius:0;break-after:page;page-break-after:always;opacity:1!important;transform:none!important}
-  .page:last-child{break-after:auto}
+  .page{width:100%;box-shadow:none;border-radius:0;break-after:page;page-break-after:always;opacity:1!important;transform:none!important}
+  .page:last-child{break-after:auto;page-break-after:auto}
   .hotspot-dot::before{display:none}
+  .cip-diagram{overflow-x:visible}
 }
 @media(max-width:760px){
   .page{padding:44px 18px 26px}
@@ -227,12 +243,12 @@ a,button{font:inherit}
 <nav class="toolbar" aria-label="Document actions">
   <div class="toolbar-group">
     <button type="button" id="printButton">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
       Download / Save as PDF
     </button>
   </div>
   <a class="btn-primary" href="https://playforwarding.clickandcargo.com/ClickAndCargo/app/login.xhtml" target="_blank" rel="noopener">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/></svg>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/></svg>
     Open ERP
   </a>
   <span class="hint">Airfreight Operational Scope · Port Virtual Lab</span>
@@ -249,7 +265,7 @@ a,button{font:inherit}
 
   <div class="section-block" style="margin-top:8px">
     <div class="section-head"><span class="dot"></span><h2>Step 01</h2></div>
-    <div class="workflow-grid" role="list" aria-label="Step 01 - Preparation">
+    <div class="workflow-grid" style="--cols:4" role="group" aria-label="Step 01 - Preparation">
       <div class="workflow-step">
         <span class="workflow-number">1</span>
         <span class="workflow-icon" aria-hidden="true">
@@ -283,7 +299,7 @@ a,button{font:inherit}
 
   <div class="section-block">
     <div class="section-head"><span class="dot"></span><h2>Step 02</h2></div>
-    <div class="workflow-grid" role="list" aria-label="Step 02 - Execution" style="grid-template-columns:repeat(3,minmax(0,1fr))">
+    <div class="workflow-grid" style="--cols:3" role="group" aria-label="Step 02 - Execution">
       <div class="workflow-step">
         <span class="workflow-number">1</span>
         <span class="workflow-icon" aria-hidden="true">
@@ -311,31 +327,30 @@ a,button{font:inherit}
   <div class="section-block">
     <div class="section-head"><span class="dot"></span><h2>Incoterms 2020 — Carriage Paid To (CPT)</h2></div>
     <div class="cip-legend">
-      <div class="item"><span class="swatch sw-orange"></span>Seller's cost</div>
-      <div class="item"><span class="swatch sw-grey"></span>Transfer of risk</div>
-      <div class="item"><span class="swatch sw-green"></span>Buyer's cost</div>
+      <div class="item"><span class="swatch sw-orange"></span>Seller's cost — up to the named place of destination</div>
+      <div class="item"><span class="swatch sw-grey"></span>Transfer of risk — at the first carrier</div>
+      <div class="item"><span class="swatch sw-green"></span>Buyer's cost — from the named place of destination</div>
     </div>
     <div class="cip-diagram">
-      <div class="cip-track">
+      <div class="cip-track" style="--pts:7">
         <div class="cip-line">
-          <div class="seller" style="width:44%"></div>
-          <div class="buyer" style="width:22%"></div>
+          <div class="seller" style="width:83.34%"></div>
+          <div class="buyer" style="width:16.66%"></div>
+          <div class="risk-mark" style="left:16.66%"></div>
         </div>
-        <div class="cip-point"><span class="dot"></span><label>Seller's Warehouse</label></div>
-        <div class="cip-point"><span class="dot"></span><label>First Carrier</label></div>
-        <div class="cip-point"><span class="dot"></span><label>Alongside Ship</label></div>
-        <div class="cip-point"><span class="dot"></span><label>Loading Port</label></div>
-        <div class="cip-point risk"><span class="dot"></span><label>On Board (risk)</label></div>
-        <div class="cip-point"><span class="dot"></span><label>On Arrival</label></div>
-        <div class="cip-point"><span class="dot"></span><label>Alongside Ship</label></div>
-        <div class="cip-point"><span class="dot"></span><label>Destination Place</label></div>
-        <div class="cip-point"><span class="dot"></span><label>Buyer's Warehouse</label></div>
+        <div class="cip-point"><span class="dot"></span><span class="cip-label">Seller's Warehouse</span></div>
+        <div class="cip-point risk"><span class="dot"></span><span class="cip-label">First Carrier — risk transfers</span></div>
+        <div class="cip-point"><span class="dot"></span><span class="cip-label">Airport of Departure</span></div>
+        <div class="cip-point"><span class="dot"></span><span class="cip-label">On Board Aircraft</span></div>
+        <div class="cip-point"><span class="dot"></span><span class="cip-label">Airport of Arrival</span></div>
+        <div class="cip-point"><span class="dot"></span><span class="cip-label">Named Place of Destination</span></div>
+        <div class="cip-point"><span class="dot"></span><span class="cip-label">Buyer's Warehouse</span></div>
       </div>
     </div>
     <div class="cip-modes">
       <span class="mode-chip">Transportation Modes: ALL</span>
     </div>
-    <p class="cip-note"><strong>CPT</strong> applies to any mode of transport or combination thereof. Unlike CIP, it does <strong>not</strong> include insurance — the seller's <strong>cost</strong> (orange) covers transport up to the agreed destination, while <strong>risk</strong> (grey) transfers to the buyer once the goods are handed to the first carrier. The <strong>buyer's cost</strong> (green) begins on arrival at destination.</p>
+    <p class="cip-note"><strong>CPT</strong> applies to any mode of transport or combination thereof, so the milestones above are the air version of the same rule. Cost and risk split at different points: the <strong>seller's cost</strong> (orange) covers carriage all the way to the named place of destination, while <strong>risk</strong> (grey) passes to the buyer much earlier — as soon as the goods are handed over to the <strong>first carrier</strong>, not when they are loaded on the aircraft. The <strong>buyer's cost</strong> (green) starts at the named place of destination. CPT does <strong>not</strong> include insurance; if the seller must insure the cargo, the correct Incoterm is CIP.</p>
   </div>
 </section>
 
@@ -343,15 +358,15 @@ a,button{font:inherit}
 <section class="page" aria-label="Air Export Shipment - ERP workflow">
   <span class="page-badge">Step 2 · Execution</span>
   <span class="step-eyebrow">Airfreight Export</span>
-  <h1 class="step-title">Air Export Shipment — On ERP Click &amp; Cargo</h1>
+  <h2 class="step-title">Air Export Shipment — On ERP Click &amp; Cargo</h2>
   <p class="step-sub">The air shipment is created in the ERP — ideally from the existing offer — and the required documents are generated and sent to the counterpart.</p>
 
   <div class="section-block" style="margin-top:8px">
     <div class="erp-breadcrumb">
       <span class="crumb">Click and Cargo</span>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
       <span class="crumb">Air Freight</span>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
       <span class="crumb">Air Export Shipments</span>
     </div>
     <div class="hotspot-row">
@@ -360,21 +375,21 @@ a,button{font:inherit}
         <span class="link-label">Open Click and Cargo</span>
       </a>
     </div>
-    <div class="autofill-row" role="list" aria-label="Fields auto-filled when creating from offer">
-      <div class="autofill-chip"><span class="num">5</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="8" width="13" height="8" rx="1"/><path d="M15 11h4l3 3v2h-7z"/><circle cx="6" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg><span class="label">Air Cargo<br>Manifest</span></div>
-      <div class="autofill-chip"><span class="num">6</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10 12 4l8 6"/><path d="M4 10v10h16V10"/><path d="M4 20h16"/></svg><span class="label">Labels</span></div>
-      <div class="autofill-chip"><span class="num">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4l10-10-4-4L4 16z"/></svg><span class="label">Goods Transport<br>Order</span></div>
-      <div class="autofill-chip"><span class="num">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-7 8-7s8 3 8 7"/></svg><span class="label">Customs<br>Order</span></div>
-      <div class="autofill-chip"><span class="num">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span class="label">Master<br>AWB</span></div>
-      <div class="autofill-chip"><span class="num">4</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l8-8h7v7l-8 8-7-7z"/><circle cx="15" cy="8" r="1.5"/></svg><span class="label">House<br>AWB</span></div>
+    <div class="autofill-row" role="group" aria-label="Fields auto-filled when creating from offer">
+      <div class="autofill-chip"><span class="num">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4l10-10-4-4L4 16z"/></svg><span class="label">Goods Transport<br>Order</span></div>
+      <div class="autofill-chip"><span class="num">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-7 8-7s8 3 8 7"/></svg><span class="label">Customs<br>Order</span></div>
+      <div class="autofill-chip"><span class="num">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span class="label">Master<br>Air Waybill</span></div>
+      <div class="autofill-chip"><span class="num">4</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l8-8h7v7l-8 8-7-7z"/><circle cx="15" cy="8" r="1.5"/></svg><span class="label">House<br>Air Waybill</span></div>
+      <div class="autofill-chip"><span class="num">5</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="8" width="13" height="8" rx="1"/><path d="M15 11h4l3 3v2h-7z"/><circle cx="6" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg><span class="label">Air Cargo<br>Manifest</span></div>
+      <div class="autofill-chip"><span class="num">6</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10 12 4l8 6"/><path d="M4 10v10h16V10"/><path d="M4 20h16"/></svg><span class="label">Labels</span></div>
     </div>
     <p class="autofill-caption">Create from offer — fields are auto-filled in this order when the shipment is generated from an existing Commercial Offer.</p>
   </div>
 
   <div class="awb-box">
-    <div class="awb-head">Need a Master AWB?</div>
+    <div class="awb-head">Need a Master Air Waybill?</div>
     <ol class="awb-steps">
-      <li><span class="awb-num">1</span>Click on <a href="https://sites.google.com/playpcs.com/sdg-airlines/request-a-quotation/master-awb-number-generator" target="_blank" rel="noopener">this link</a> to access the SDG Airlines platform.</li>
+      <li><span class="awb-num">1</span>Click on <a href="https://sites.google.com/playpcs.com/sdg-airlines/quotations/master-awb-number-generator" target="_blank" rel="noopener">this link</a> to access the SDG Airlines platform.</li>
       <li><span class="awb-num">2</span>Enter your <strong>Team Name</strong> and <strong>PIN Code</strong> to retrieve the Air Waybill number.</li>
       <li><span class="awb-num">3</span>Use it to continue your operation.</li>
     </ol>
@@ -382,7 +397,7 @@ a,button{font:inherit}
 
   <div class="section-block">
     <div class="section-head"><span class="dot"></span><h2>(ERP) Generate Documentation</h2></div>
-    <div class="workflow-grid" role="list" aria-label="Documents generated by the ERP" style="grid-template-columns:repeat(6,minmax(0,1fr))">
+    <div class="workflow-grid" style="--cols:6" role="group" aria-label="Documents generated by the ERP">
       <a class="workflow-step" href="https://playforwarding.clickandcargo.com/ClickAndCargo/app/index.xhtml" target="_blank" rel="noopener" style="text-decoration:none">
         <span class="workflow-number">1</span>
         <span class="workflow-icon" aria-hidden="true">
@@ -402,21 +417,21 @@ a,button{font:inherit}
         <span class="workflow-icon" aria-hidden="true">
           <svg viewBox="0 0 64 64"><path d="M32 8 15 17l17 9 17-9-17-9Z"/><path d="M24 27v8c0 5 3 8 8 8s8-3 8-8v-8"/><path d="M16 56c2-9 8-13 16-13s14 4 16 13"/><path d="M13 17v12"/></svg>
         </span>
-        <span class="workflow-label">Custom<br>Clearance</span>
+        <span class="workflow-label">Customs<br>Clearance</span>
       </div>
       <div class="workflow-step">
         <span class="workflow-number">4</span>
         <span class="workflow-icon" aria-hidden="true">
           <svg viewBox="0 0 64 64"><path d="M16 8h24l10 10v38H16z"/><path d="M40 8v12h10"/><path d="M23 31h20M23 39h20M23 47h14"/></svg>
         </span>
-        <span class="workflow-label">Master Airway<br>Bill of Lading</span>
+        <span class="workflow-label">Master Air<br>Waybill (MAWB)</span>
       </div>
       <div class="workflow-step">
         <span class="workflow-number">5</span>
         <span class="workflow-icon" aria-hidden="true">
-          <svg viewBox="0 0 64 64"><path d="M16 8h24l10 10v38H16z"/><path d="M40 8v12h10"/><path d="M23 31h20M23 39h20M23 47h14"/></svg>
+          <svg viewBox="0 0 64 64"><path d="M16 22h24l10 10v24H16z"/><path d="M14 22 28 10l14 12"/><path d="M23 38h20M23 46h14"/></svg>
         </span>
-        <span class="workflow-label">House Airway<br>Bill of Lading</span>
+        <span class="workflow-label">House Air<br>Waybill (HAWB)</span>
       </div>
       <div class="workflow-step">
         <span class="workflow-number">6</span>
@@ -431,11 +446,11 @@ a,button{font:inherit}
   <div class="flow-diagram">
     <div class="flow-box brown">Send<br>Documentation</div>
     <div class="flow-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
-    <div class="flow-note">After the documents are generated, you will receive part of them via email in PDF format. You can find the rest in the "document section" inside the ERP platform. Download the documents and send them to your counterpart — or send the email through the ERP platform after uploading the documents you received via email. You need to send the <strong>Master Airway Bill of Lading</strong>, <strong>House Airway Bill of Lading</strong>, <strong>Commercial Invoice</strong>, and <strong>Packing List</strong>, along with the <strong>Pre-Alert</strong>.</div>
+    <div class="flow-note">After the documents are generated, you will receive part of them via email in PDF format. You can find the rest in the "document section" inside the ERP platform. Download the documents and send them to your counterpart — or send the email through the ERP platform after uploading the documents you received via email. You need to send the <strong>Master Air Waybill (MAWB)</strong>, <strong>House Air Waybill (HAWB)</strong>, <strong>Commercial Invoice</strong> and <strong>Packing List</strong>, along with the <strong>Pre-Alert</strong>.</div>
   </div>
 
   <div class="closure-box">
-    <div class="icon"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg></div>
+    <div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg></div>
     <div>
       <h3>Operation complete</h3>
       <p>Congratulations! The export operation is complete!</p>
@@ -443,57 +458,57 @@ a,button{font:inherit}
   </div>
 </section>
 
-<!-- ===================== PAGE 3 — CUSTOM TOTAL VALUE (CIP) ===================== -->
-<section class="page" aria-label="Custom Total Value CIP">
+<!-- ===================== PAGE 3 — CUSTOM TOTAL VALUE (CPT) ===================== -->
+<section class="page" aria-label="Custom Total Value CPT">
   <span class="page-badge">Step 1 · Point B</span>
   <span class="step-eyebrow">Airfreight Export</span>
-  <h1 class="step-title">Custom Total Value (CIP)</h1>
-  <p class="step-sub">Whenever the operation requires a CIP-based customs value, the quotation must combine the value of the goods with all transport, surcharge, and insurance costs.</p>
+  <h2 class="step-title">Custom Total Value (CPT)</h2>
+  <p class="step-sub">Whenever the operation requires a CPT-based customs value, the quotation must combine the value of the goods with all transport and surcharge costs up to the named place of destination. Under CPT there is no insurance line.</p>
 
   <div class="value-header">
-    <span class="letter-circle">B</span>
+    <span class="letter-circle" aria-hidden="true">B</span>
     <div class="value-grid">
       <div class="value-box">Value of Goods</div>
-      <div class="value-box">Transports Cost</div>
-      <div class="value-box">Surcharges Cost (FOB)</div>
-      <div class="value-box">Insurance</div>
+      <div class="value-box">Inland Transport Cost</div>
+      <div class="value-box">Air Freight Cost</div>
+      <div class="value-box">Air Surcharges</div>
     </div>
   </div>
 
   <div class="calc-box">
-    <strong>Example:</strong> Operation from Barcelona Port to Rotterdam (Maritime)<br>
+    <strong>Example:</strong> Operation from Barcelona El Prat (BCN) to Amsterdam Schiphol (AMS) — Airfreight<br>
     Value of the goods: <span class="num">55,000 €</span> (Invoice)<br>
-    Inland Transport: from customer warehouse to Port Origin (BCN), 25 km × 18 € = <span class="num">450 €</span><br>
-    Main Transport: Maritime vessel freight from BCN to RTM = <span class="num">600 €</span> (check <a href="https://sdglines.com/quotation" target="_blank" rel="noopener">SDG Lines</a>)<br>
-    Surcharges to complete FOB = THC (150) + DOC (45) + Port Taxes (25) + VGM (35) = <span class="num">255 €</span><br>
-    Insurance = Plain Fee — <span class="num">500 €</span><br>
-    <div class="calc-total">Custom Total Value = 55,000 + 450 + 600 + 255 + 500 = 56,805 €</div>
+    Inland Transport: from customer warehouse to Airport of Origin (BCN), 25 km × 18 €/km = <span class="num">450 €</span><br>
+    Main Transport: air freight BCN to AMS = <span class="num">850 €</span> (check <a href="https://sites.google.com/playpcs.com/sdg-airlines/request-a-quotation" target="_blank" rel="noopener">SDG Airlines</a>)<br>
+    Air surcharges = Terminal Handling (120) + AWB / Documentation Fee (45) + Security Surcharge (60) + Fuel Surcharge (90) = <span class="num">315 €</span><br>
+    <div class="calc-total">Custom Total Value = 55,000 + 450 + 850 + 315 = 56,615 €</div>
   </div>
 
   <div class="price-indicator">
     <h4>Price indicator</h4>
     <ul>
-      <li>Price per km = 18 € &gt; 450 (1.8 per km)</li>
-      <li>Insurance = 500 €</li>
-      <li>Freight = <a href="https://sdglines.com/quotation" target="_blank" rel="noopener">SDG Lines</a></li>
-      <li>Surcharges = <a href="https://sdglines.com/quotation" target="_blank" rel="noopener">SDG Lines</a></li>
+      <li>Inland transport = 18 € per km → 25 km × 18 € = 450 €</li>
+      <li>Air freight = <a href="https://sites.google.com/playpcs.com/sdg-airlines/request-a-quotation" target="_blank" rel="noopener">SDG Airlines</a></li>
+      <li>Air surcharges (THC, AWB fee, security, fuel) = <a href="https://sites.google.com/playpcs.com/sdg-airlines/request-a-quotation" target="_blank" rel="noopener">SDG Airlines</a></li>
+      <li>Insurance = not included under CPT (use CIP if the seller must insure)</li>
     </ul>
   </div>
 
   <div class="instructions-box">
-    <strong>Instructions:</strong> Once you have the total value, send an email to <a href="mailto:international@escolaeuropea.eu">international@escolaeuropea.eu</a> with the subject line <em>"Customs Value_'TEAMname'"</em>, indicating each of the fields you used to obtain the value. Please attach the commercial invoice and the quotation from the shipping company.
+    <strong>Instructions:</strong> Once you have the total value, send an email to <a href="mailto:international@escolaeuropea.eu">international@escolaeuropea.eu</a> with the subject line <em>"Customs Value_'TEAMname'"</em>, indicating each of the fields you used to obtain the value. Please attach the commercial invoice and the SDG Airlines quotation.
   </div>
 </section>
 
 </main>
 
 <button type="button" id="backToTop" class="back-to-top" aria-label="Back to top">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
 </button>
 
 <script>
 (function(){
-  document.getElementById('printButton').addEventListener('click',function(){window.print();});
+  var printBtn=document.getElementById('printButton');
+  if(printBtn){printBtn.addEventListener('click',function(){window.print();});}
 
   var backToTop=document.getElementById('backToTop');
   function onScroll(){
@@ -516,6 +531,11 @@ a,button{font:inherit}
   } else {
     pages.forEach(function(p){p.classList.add('is-visible');});
   }
+
+  // Ensure every page is visible before printing (observer may not have fired yet).
+  window.addEventListener('beforeprint', function(){
+    pages.forEach(function(p){p.classList.add('is-visible');});
+  });
 })();
 </script>
 </body>
